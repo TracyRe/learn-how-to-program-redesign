@@ -1,0 +1,251 @@
+// ******* VARIABLES ********
+$bgcolor: #f0f0f0;
+$contrast-bgcolor: #f9f9f9;
+$primary-color: #00b6b5;
+$accent-color: #5b5b5b;
+$link-color: #ed4000;
+$base-font: 'Roboto', sans-serif;
+
+// ******** MIXINS ********
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+  }
+
+@mixin cushion($padding, $margin) {
+  padding: $padding;
+  margin: $margin;
+}
+
+@mixin min-max($minsize, $maxsize) {
+  min-width: $minsize;
+  max-width: $maxsize;
+}
+
+@mixin box {
+  border-radius: 8%;
+  @include size(75%,calc((100vw / 3 ) *.75));
+  @include cushion(0,10%);
+  background-color: $contrast-bgcolor;
+  border: 1px solid $primary-color;
+  box-shadow: 1px 1px 4px 0 rgba(0,0,0,0.3);
+  z-index: 1;
+  .inner {
+    border-radius: 6%;
+    @include size(90%,90%);
+    @include cushion(0,5%);
+    border: 1px solid $primary-color;
+    z-index: 2;
+  }
+}
+
+@mixin border($color) {
+  border: 1px solid $color;
+}
+
+@mixin head($size: 2rem){
+  font: {
+    family: $base-font;
+    weight: 300;
+    size: $size;
+  }
+}
+
+@mixin subhead($size: 1.6rem){
+  font: {
+    family: $base-font;
+    weight: 400;
+    size: $size;
+  }
+  line-height: 120%;
+}
+
+// font-family: 'Roboto', sans-serif;
+// font-family: 'Roboto Condensed', sans-serif;
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font: {
+    family: $base-font;
+    weight: 400;
+    size: 16px;
+  }
+}
+
+body {
+  background: $bgcolor;
+  color: $accent-color;
+  @include size(100vw,100vh);
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+}
+
+.container {
+  @include size(100%, 100vh);
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.content-wrapper {
+// @include border(#f0f);
+}
+
+.grid-div {
+  // @include border(#f00);
+  @include size(100%, auto);
+  display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  a {
+    color: $accent-color;
+  }
+}
+//   @include size(100%,calc(100vw - 30px));
+// @include cushion(0, 15px);
+
+
+.box {
+  @include box;
+}
+
+.inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.track-tile h2 {
+  font: {
+    family: 'Roboto Condensed', sans-serif;
+    weight: 300;
+    size: 1.1rem;
+  }
+  text-align: center;
+  line-height: 120%;
+  letter-spacing: -.035em;
+}
+
+
+h1 {
+  @include head;
+}
+
+.header-landing {
+  @include cushion(0, 15px);
+
+}
+
+#headbar-landing {
+  background-image: linear-gradient(to right, $bgcolor 20%, $primary-color);
+  @include size(100%, 20px);
+}
+
+#headbar {
+  background-color: $accent-color;
+  @include size(100%, 20px);
+  a {
+    @include cushion(0 0 0 10px, 0);
+    color: white;
+    font-size: .9rem;
+  }
+}
+
+#logo {
+  @include size(40%, auto);
+  @include min-max(130px, 350px);
+}
+
+.page-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  @include size(100%, 60px);
+  background-color: $primary-color;
+  color: white;
+  .box {
+    @include box;
+    @include size(48px,48px);
+    box-shadow: none;
+    @include cushion(0.5% 0 0 0.5%,0 8px 0 20px);
+    .inner {
+      @include cushion(0,0);
+    }
+  }
+  h1 {
+    @include head(1.7rem);
+  }
+}
+
+.link {
+  @include size(100%,80px);
+  border-bottom: 1px solid lightgrey;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  padding-left: 20px;
+  h2 {
+    @include subhead;
+  }
+  h3 {
+    @include subhead(1.4rem);
+    @include cushion(0 0 0 2rem, 0);
+  }
+}
+
+.prehead {
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.footer {
+  @include cushion(0 0 .5em 0, 0 15px 0 15px);
+  @include size(calc(100vw - 30px), auto);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  font-size: .85rem;
+  #logo {
+    @include size(90px, auto);
+    @include min-max(90px, 90px);
+  }
+}
+
+span#bc-intro, span#bc-front-end {
+  display: none;
+}
+
+// **** MEDIA QUERIES ****
+// tablet portrait
+@mixin for-tablet-portait-up {
+  @media screen and (min-width: 600px) {
+    @content;
+  }
+}
+
+// tablet landscape
+@mixin for-tablet-landscape-up {
+  @media screen and (min-width: 900px) {
+    @content;
+  }
+}
+
+ // desktop/laptop
+ @mixin for-desktop-up {
+   @media screen and (min-width: 1200px) {
+     @content;
+   }
+ }
+  // monstah
+  @mixin for-big-screen-up {
+    @media screen and (min-width: 1800px) {
+      @content;
+    }
+  }
